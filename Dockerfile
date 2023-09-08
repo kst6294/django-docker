@@ -61,7 +61,7 @@ RUN poetry install --no-root
 COPY wait-for-it.sh ./wait-for-it.sh
 
 # will beiome mountpoint of our code
-WORKDIR /app
+WORKDIR /app/src
 
 
 EXPOSE 8000
@@ -69,4 +69,4 @@ EXPOSE 8000
 
 # Django 애플리케이션 실행 (0.0.0.0:8000으로 실행)
 
-CMD python app/manage.py runserver 0.0.0.0:8000
+CMD gunicorn --bind 0:8000 --reload config.wsgi:application
