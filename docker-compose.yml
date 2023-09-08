@@ -1,5 +1,13 @@
 version: '3'
 services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+
   backend:
     container_name: backend
     image: backend
@@ -27,5 +35,10 @@ services:
     networks:
       - django_network
 
+  
+
 networks:
   django_network:
+
+volumes:
+  postgres_data:
