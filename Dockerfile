@@ -38,6 +38,7 @@ RUN apt-get update \
     && apt-get install --no-install-recommends -y \
         # deps for installing poetry
         curl \
+        libpq-dev \
         # deps for building python deps
         build-essential
 
@@ -65,4 +66,5 @@ EXPOSE 8000
 
 
 # Django 애플리케이션 실행 (0.0.0.0:8000으로 실행)
+
 CMD python app/manage.py runserver 0.0.0.0:8000

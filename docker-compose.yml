@@ -5,8 +5,13 @@ services:
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./dockers/postgres/restore:/restore
+      - ./dockers/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_PASSWORD=password
+    
+    networks:
+      - django_network
 
   backend:
     container_name: backend
@@ -20,6 +25,9 @@ services:
       - .:/app
     environment:
       - DEBUG=True
+    restart: always
+    depends_on:
+      - postgres
     networks:
       - django_network
 
@@ -34,6 +42,7 @@ services:
       - backend
     networks:
       - django_network
+    restart: always
 
   
 
