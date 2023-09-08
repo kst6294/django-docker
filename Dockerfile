@@ -57,8 +57,10 @@ COPY poetry.lock pyproject.toml ./
 # quicker install as runtime deps are already installed
 RUN poetry install --no-root
 
+# Add wait-for-it
+COPY wait-for-it.sh ./wait-for-it.sh
 
-# will become mountpoint of our code
+# will beiome mountpoint of our code
 WORKDIR /app
 
 

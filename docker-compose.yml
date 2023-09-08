@@ -8,8 +8,7 @@ services:
       - ./dockers/postgres/restore:/restore
       - ./dockers/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
-      - POSTGRES_PASSWORD=password
-    
+      - POSTGRES_PASSWORD=password    
     networks:
       - django_network
 
@@ -30,6 +29,13 @@ services:
       - postgres
     networks:
       - django_network
+    command: 
+      - bash
+      - -c
+      - |
+        chmod +x ./wait-for-it.sh && 
+        ./wait-for-it.sh postgres:5432 -t 10 &&
+        python app/manage.py runserver 0:8000
 
   nginx:
     container_name: nginx
@@ -42,9 +48,7 @@ services:
       - backend
     networks:
       - django_network
-    restart: always
-
-  
+    restart: always  
 
 networks:
   django_network:
