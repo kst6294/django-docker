@@ -1,13 +1,31 @@
 version: '3'
 services:
-  api:
-    build: .
+  backend:
+    container_name: backend
+    image: backend
+    build:
+      context: .
+      dockerfile:  ./Dockerfile
     ports:
       - "8000:8000"
     volumes:
       - .:/app
     environment:
       - DEBUG=True
+    networks:
+      - django_network
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./dockers/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - backend
+    networks:
+      - django_network
 
 networks:
   django_network:
