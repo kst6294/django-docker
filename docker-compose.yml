@@ -27,6 +27,7 @@ services:
     restart: always
     depends_on:
       - postgres
+      - redis
     networks:
       - django_network
     command: 
@@ -49,6 +50,16 @@ services:
     networks:
       - django_network
     restart: always  
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - django_network
+    
+
 
 networks:
   django_network:
